@@ -15,7 +15,6 @@ Each project has its own README file with detailed instructions and required lib
 ## Directory Structure
 
 ```plaintext
-.
 ├── azure_ai_agent_send_email
 │   ├── README.md              # Instructions and requirements for the email agent.
 │   ├── email_services.py       # Contains the email sending function.
@@ -25,7 +24,7 @@ Each project has its own README file with detailed instructions and required lib
     ├── README.md              # Instructions and requirements for the SQL agent.
     ├── sql_agent.ipynb       # Main notebook containing the SQL and schema plugins and agent integration.
     └── requirements.txt   
-
+```
 
 ## Folder Details
 
