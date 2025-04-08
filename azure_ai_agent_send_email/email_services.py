@@ -28,7 +28,7 @@ DEFAULT_MESSAGE = {
 
 POLLER_WAIT_TIME = 10
 
-def azure_send_email(subject: str) -> dict:
+def azure_send_email(subject: str, body:str) -> dict:
     """
     Sends an email using Azure Communication Services EmailClient.
     
@@ -37,6 +37,7 @@ def azure_send_email(subject: str) -> dict:
     
     Parameters:
         subject (str): The email subject to override.
+        html (str): The HTML content of the email.
     
     Returns:
         dict: A dictionary containing the operation result:
@@ -54,6 +55,8 @@ def azure_send_email(subject: str) -> dict:
 
         # Override only the subject in the content.
         message["content"]["subject"] = subject
+        # Override only the html in the content.
+        message["content"]["html"] = "<html><h1>" + body +"</h1></html>"
 
         # Create the email client using the connection string from the environment variable.
         email_client = EmailClient.from_connection_string(
@@ -89,5 +92,5 @@ def azure_send_email(subject: str) -> dict:
 
 # Example usage for testing outside the Azure AI Agent context:
 if __name__ == '__main__':
-    response = azure_send_email("Hello World")
+    response = azure_send_email(subject="Hello World", html="This is a test email to check the functionality.")
     print(response)
