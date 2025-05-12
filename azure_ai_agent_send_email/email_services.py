@@ -8,7 +8,6 @@ from azure.identity import DefaultAzureCredential
 
 load_dotenv()
 
-# Default email message details.
 DEFAULT_MESSAGE = {
     "content": {
         "subject": "This is test",
@@ -37,7 +36,7 @@ def azure_send_email(subject: str, body:str) -> dict:
     
     Parameters:
         subject (str): The email subject to override.
-        html (str): The HTML content of the email.
+        body (str): The content of the email.
     
     Returns:
         dict: A dictionary containing the operation result:
@@ -49,25 +48,19 @@ def azure_send_email(subject: str, body:str) -> dict:
         >>> print(response)
     """
     try:
-        # Create a deep copy of the default message to modify.
         message = DEFAULT_MESSAGE.copy()
         message["content"] = DEFAULT_MESSAGE["content"].copy()
 
-        # Override only the subject in the content.
         message["content"]["subject"] = subject
-        # Override only the html in the content.
         message["content"]["html"] = "<html><h1>" + body +"</h1></html>"
 
-        # Create the email client using the connection string from the environment variable.
         email_client = EmailClient.from_connection_string(
             os.getenv("EMAIL_COMMUNICATION_SERVICES_STRING")
         )
 
-        # Begin sending the email.
         poller = email_client.begin_send(message)
         time_elapsed = 0
 
-        # Poll until the email sending operation is completed or a timeout is reached.
         while not poller.done():
             print("Email send poller status: " + poller.status())
             poller.wait(POLLER_WAIT_TIME)
@@ -90,7 +83,6 @@ def azure_send_email(subject: str, body:str) -> dict:
         print(error_str)
         return {"error": error_str}
 
-# Example usage for testing outside the Azure AI Agent context:
 if __name__ == '__main__':
     response = azure_send_email(subject="Hello World", html="This is a test email to check the functionality.")
     print(response)
