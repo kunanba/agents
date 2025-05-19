@@ -1,3 +1,4 @@
+# This repo is moving to Azure-samples https://github.com/Azure-Samples/ai-agent-samples/tree/main
 # Repository Overview
 
 This repository contains two separate projects:
